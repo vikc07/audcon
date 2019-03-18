@@ -1,6 +1,7 @@
 import os
 import shutil
 import json
+from audcon import app
 from gpm import config
 
 cfg_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cfg')
@@ -36,5 +37,11 @@ DEFAULT_CFG_FILE_PATH = default_cfg_file_path
 
 
 def save_config():
+    dburi()
     with open(CFG_FILE_PATH, 'w') as outfile:
         json.dump(cfg.__dict__, indent=4, fp=outfile)
+
+
+def reload_config():
+    cfg.read()
+    app.config.from_object(cfg)

@@ -65,8 +65,7 @@ def settings():
             configuration.cfg.UI['TZ'] = request.form.get('ui_time_zone')
 
             configuration.save_config()
-            configuration.cfg.read()
-            app.config.from_object(configuration.cfg)
+            configuration.reload_config()
 
             flash('Settings have been saved')
         else:
