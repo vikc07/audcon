@@ -1,0 +1,47 @@
+{
+    "LOG_LEVEL": 10,
+    "LOG_TSFORMAT": "YYYYMMDD",
+    "REMOVE_SRC_FILE": 0,
+    "DB": {
+        "TYPE": "mysql",
+        "DRIVER": "pymysql",
+        "HOST": null,
+        "PORT": null,
+        "NAME": null,
+        "CHARSET": "utf8",
+        "USER": null,
+        "PASS": null
+    },
+    "DEFAULT_ACODEC": "-ab 320k",
+    "DEFAULT_OPTIONS": "-map_metadata 0 -id3v2_version 3",
+    "DEFAULT_EXT": ".mp3",
+    "MEDIA_SCAN_RECURSIVELY": true,
+    "MEDIA_FOLDER": [
+        "/Volumes/storage/test/music/"
+    ],
+    "FILE_TYPES": [
+        ".mp3",
+        ".flac"
+    ],
+    "TEMP_FOLDER": "/temp",
+    "OK_A_FORMATS": [
+        "mp3"
+    ],
+    "CMD_FFMPEG": "/ffmpeg/ffmpeg",
+    "CMD_FFPROBE": "/ffmpeg/ffprobe",
+    "ALERTS": {
+        "ENABLED": true,
+        "FROM_ADDRESS": "jarvis@vkrm.ch",
+        "TO_ADDRESS": "me@vkrm.ch",
+        "SMTP_HOST": "jarvis",
+        "SMTP_PORT": "25",
+        "SMTP_USER": "",
+        "SMTP_PASS": "",
+        "SMTP_TLS_ENABLED": true
+    },
+    "SECRET_KEY": "0839e41ba87d19eafd3d4472d89aa5b098b0299cec6274514f09c68787b6ab58",
+    "UI": {
+        "ITEMS_PER_PAGE": 10,
+        "TZ": "America/Detroit"
+    }
+}

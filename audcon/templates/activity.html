@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% set active_page = 'activity' %}
+
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-3 border-bottom">
+        <h2>{{ title }}</h2>
+    </div>
+    <div class="d-flex pt-2">
+        <nav aria-label="...">
+          <ul class="pagination pagination-sm">
+            {% for page in range(pages) %}
+                {% if current_page == (page + 1) %}
+                {%  set disabled = 'disabled' %}
+                {% else %}
+                {%  set disabled = '' %}
+                {% endif %}
+            <li class="page-item {{ disabled }}">
+              <a class="page-link" href="{{ url_for('activity') }}/p/{{ page + 1}}" tabindex="-1">{{ page + 1 }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+    </div>
+    <div class="d-flex pt-2">
+        <table class="table table-hover table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">Service</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Result</th>
+                    <th scope="col">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.created_date_local_tz() }}</td>
+                    <td>{{ record.service.capitalize() }}</td>
+                    {% set badge = 'warning' %}
+                    {% if record.status == 'complete' %}
+                    {%  set badge = 'success' %}
+                    {% endif %}
+                    <td><span class="badge badge-{{ badge }}">{{ record.status.capitalize() }}</span></td>
+                    <td>{{ record.params }}</td>
+                    <td>{{ record.duration_formatted() }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
