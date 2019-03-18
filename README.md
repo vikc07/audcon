@@ -19,7 +19,8 @@ needed
 3. Execute `run.sh` to start the internal server
 4. Access the web ui at `http://server:5000`. First time you run it will ask for changing settings
 
-Alternatively, a Docker image is available with Audcon and ffmpeg/ffprobe pre-installed. You will still need MySQL 
+Alternatively, a [Docker image](https://cloud.docker.com/repository/docker/vikramchauhan/audcon) is available with 
+Audcon and ffmpeg/ffprobe pre-installed. You will still need MySQL 
 container.
 
 #### ---- Experimental Only ---- ####
