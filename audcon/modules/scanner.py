@@ -5,7 +5,6 @@ from audcon import log
 from audcon.models import *
 from audcon.modules import functions, enqueue
 from gpm import formatting
-from flask import flash
 
 
 def scan(full_scan = False):
@@ -153,7 +152,7 @@ def scan(full_scan = False):
 
     # Remove dead entries
     log.info('checking for dead entries')
-    media = Media.query.all()
+    media = Media.query.filter_by(isdeleted=False).all()
     dead_entries = 0
     for file in media:
         if not os.path.exists(file.media_file_path):

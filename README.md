@@ -1,7 +1,7 @@
 # Audcon
 A simple audio file converter
 
-Audcon scans your media library and identify files that can be converted to another format to save space. A 
+Audcon scans your media library and identifies files that can be converted to another format to save space. A 
 typical use case would be to convert flac files to mp3.
 
 Audcon has scanner and converter services that run on a scheduled basis. Scanner service scans all the audio files 
