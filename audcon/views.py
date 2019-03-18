@@ -28,7 +28,7 @@ def settings():
     if request.method == 'POST':
         if form.validate_on_submit():
             configuration.cfg.DB['HOST'] = request.form.get('dbhost')
-            configuration.cfg.DB['PORT'] = request.form.get('dbport')
+            configuration.cfg.DB['PORT'] = int(request.form.get('dbport'))
             configuration.cfg.DB['NAME'] = request.form.get('dbname')
             configuration.cfg.DB['USER'] = request.form.get('dbuser')
             configuration.cfg.DB['PASS'] = request.form.get('dbpass')
@@ -38,7 +38,7 @@ def settings():
                 configuration.cfg.ALERTS['FROM_ADDRESS'] = request.form.get('alerts_from_address')
                 configuration.cfg.ALERTS['TO_ADDRESS'] = request.form.get('alerts_to_address')
                 configuration.cfg.ALERTS['SMTP_HOST'] = request.form.get('alerts_smtp_host')
-                configuration.cfg.ALERTS['SMTP_PORT'] = request.form.get('alerts_smtp_port')
+                configuration.cfg.ALERTS['SMTP_PORT'] = int(request.form.get('alerts_smtp_port'))
                 configuration.cfg.ALERTS['SMTP_USER'] = request.form.get('alerts_smtp_user')
                 configuration.cfg.ALERTS['SMTP_PASS'] = request.form.get('alerts_smtp_pass')
                 if request.form.get('alerts_smtp_tls'):

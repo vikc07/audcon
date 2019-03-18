@@ -1,7 +1,6 @@
 import hashlib
 import os
 import subprocess
-from audcon import app
 
 
 def sha256(file):
