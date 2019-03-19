@@ -40,21 +40,30 @@ def scan(full_scan = False):
 
     files_to_scan = []
     for file in all_files:
-        file_last_updated_in_s = (time.time() - os.path.getmtime(file))
-        if last_ran_in_s > file_last_updated_in_s or last_ran_in_s == -1:
-            log.debug('file: {}'.format(file))
-            log.debug('file_last_updated_in_s: {}'.format(formatting.time_pretty(file_last_updated_in_s)))
-
+        # Check if file exists
+        if os.path.exists(file):
             # Find extension and file size
             ext = functions.get_file_extension(file)
             if ext in app.config['FILE_TYPES']:
                 log.info(ext.strip('.') + ': ' + file)
-                log.debug('adding to scan list')
-                files_to_scan.append(file)
+
+                file_last_updated_in_s = (time.time() - os.path.getmtime(file))
+                if last_ran_in_s > file_last_updated_in_s or last_ran_in_s == -1:
+                    log.debug('file: {}'.format(file))
+                    log.debug('file_last_updated_in_s: {}'.format(formatting.time_pretty(file_last_updated_in_s)))
+
+                    # Find extension and file size
+                    ext = functions.get_file_extension(file)
+                    if ext in app.config['FILE_TYPES']:
+                        log.info(ext.strip('.') + ': ' + file)
+                        log.debug('adding to scan list')
+                        files_to_scan.append(file)
+                else:
+                    log.debug('skipping as metadata has been recently updated')
             else:
                 log.debug('skipped unsupported file type {}'.format(file))
         else:
-            log.debug('skipping')
+            log.debug('skipping as file does not exist')
 
     log.info('{} files to scan'.format(len(files_to_scan)))
 
