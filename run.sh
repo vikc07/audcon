@@ -18,7 +18,7 @@ if [[ -e "$CONFIG" ]]
     then
         cp -f "$ROOT/audcon/cfg/default.json" "$CONFIG/default.json"
         rm -rf "$ROOT/audcon/cfg"
-        ln -s "$CONFIG $ROOT/audcon/cfg"
+        ln -s "$CONFIG" "$ROOT/audcon/cfg"
 fi
 
 cd $ROOT
