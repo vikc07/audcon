@@ -1,0 +1,43 @@
+{% macro render_field(field) %}
+<div class="form-group">
+    {{ field.label }}
+    {% if field.errors %}
+    {{ field(class_="form-control is-invalid")|safe }}
+    <div class="invalid-feedback">
+        {% for error in field.errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% else %}
+    {{ field(class_="form-control")|safe }}
+  {% endif %}
+</div>
+{% endmacro %}
+{% macro render_field_checkbox(field) %}
+<div class="form-group">
+    <div class="form-check form-check-inline">
+    {% if field.errors %}
+    {{ field(class_="form-check-input is-invalid")|safe }}
+    <div class="invalid-feedback">
+        {% for error in field.errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% else %}
+    {{ field(class_="form-check-input")|safe }}
+    {% endif %}
+    {{ field.label(class_="form-check-label") }}
+    </div>
+</div>
+{% endmacro %}
+{% macro render_form_header(text) %}
+<div class="form-group">
+    <h2>{{ text }}</h2>
+</div>
+{% endmacro %}
+{% macro render_csrf(token) %}
+{{ token }}
+{% if token.errors %}
+    <div class="warning">You have submitted an invalid CSRF token</div>
+{% endif %}
+{% endmacro %}

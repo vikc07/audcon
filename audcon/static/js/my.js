@@ -16,8 +16,4 @@ $(document).ready(function(){
         $('#spinner').html('<i class="fas fa-spinner fa-spin"></i>');
 	    $('#spinner').show();
     });
-
-	$(document).ready(function () {
-        $(".pagination").rPage();
-    });
 });

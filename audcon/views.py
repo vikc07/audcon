@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from audcon.forms import *
 from audcon.models import *
 from audcon.modules import functions, scanner, converter
-from audcon import configuration
+from audcon import configuration, log
 
 
 @app.route('/')
@@ -24,24 +24,26 @@ def index(page=1):
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     title = 'Settings'
-    form = CoreConfigurationForm()
+    form = CoreConfigurationForm(request.form)
     if request.method == 'POST':
+        log.debug(form)
         if form.validate_on_submit():
-            configuration.cfg.DB['HOST'] = request.form.get('dbhost')
-            configuration.cfg.DB['PORT'] = int(request.form.get('dbport'))
-            configuration.cfg.DB['NAME'] = request.form.get('dbname')
-            configuration.cfg.DB['USER'] = request.form.get('dbuser')
-            configuration.cfg.DB['PASS'] = request.form.get('dbpass')
+            configuration.cfg.DB['HOST'] = form.dbhost.data
+            configuration.cfg.DB['PORT'] = form.dbport.data
+            configuration.cfg.DB['NAME'] = form.dbname.data
+            configuration.cfg.DB['USER'] = form.dbuser.data
+            configuration.cfg.DB['PASS'] = form.dbpass.data
 
-            if request.form.get('alerts_enabled'):
+            if form.alerts_enabled.data:
                 configuration.cfg.ALERTS['ENABLED'] = True
-                configuration.cfg.ALERTS['FROM_ADDRESS'] = request.form.get('alerts_from_address')
-                configuration.cfg.ALERTS['TO_ADDRESS'] = request.form.get('alerts_to_address')
-                configuration.cfg.ALERTS['SMTP_HOST'] = request.form.get('alerts_smtp_host')
-                configuration.cfg.ALERTS['SMTP_PORT'] = int(request.form.get('alerts_smtp_port'))
-                configuration.cfg.ALERTS['SMTP_USER'] = request.form.get('alerts_smtp_user')
-                configuration.cfg.ALERTS['SMTP_PASS'] = request.form.get('alerts_smtp_pass')
-                if request.form.get('alerts_smtp_tls'):
+                configuration.cfg.ALERTS['FROM_ADDRESS'] = form.alerts_from_address.data
+                configuration.cfg.ALERTS['TO_ADDRESS'] = form.alerts_to_address.data
+                configuration.cfg.ALERTS['SMTP_HOST'] = form.alerts_smtp_host.data
+                configuration.cfg.ALERTS['SMTP_PORT'] = form.alerts_smtp_port.data
+                configuration.cfg.ALERTS['SMTP_USER'] = form.alerts_smtp_user.data
+                configuration.cfg.ALERTS['SMTP_PASS'] = form.alerts_smtp_pass.data
+
+                if form.alerts_smtp_tls.data:
                     configuration.cfg.ALERTS['SMTP_TLS_ENABLED'] = True
                 else:
                     configuration.cfg.ALERTS['SMTP_TLS_ENABLED'] = False
@@ -50,27 +52,29 @@ def settings():
                 configuration.cfg.ALERTS['FROM_ADDRESS'] = None
                 configuration.cfg.ALERTS['TO_ADDRESS'] = None
                 configuration.cfg.ALERTS['SMTP_HOST'] = None
-                configuration.cfg.ALERTS['SMTP_PORT'] = None
+                configuration.cfg.ALERTS['SMTP_PORT'] = 25
                 configuration.cfg.ALERTS['SMTP_USER'] = None
                 configuration.cfg.ALERTS['SMTP_PASS'] = None
                 configuration.cfg.ALERTS['SMTP_TLS_ENABLED'] = False
 
-            configuration.cfg.MEDIA_FOLDER[0] = request.form.get('media_folder')
-            if request.form.get('media_scan_recursively'):
+            configuration.cfg.MEDIA_FOLDER[0] = form.media_folder.data
+            if form.media_scan_recursively.data:
                 configuration.cfg.MEDIA_SCAN_RECURSIVELY = True
             else:
                 configuration.cfg.MEDIA_SCAN_RECURSIVELY = False
 
-            configuration.cfg.UI['ITEMS_PER_PAGE'] = int(request.form.get('ui_items_per_page'))
-            configuration.cfg.UI['TZ'] = request.form.get('ui_time_zone')
+            configuration.cfg.UI['ITEMS_PER_PAGE'] = form.ui_items_per_page.data
+            configuration.cfg.UI['TZ'] = form.ui_time_zone.data
 
             configuration.save_config()
-            configuration.reload_config()
+            configuration.cfg.read()
+            app.config.from_object(configuration.cfg)
 
             flash('Settings have been saved')
+            return redirect(url_for('settings'))
         else:
             flash('Error')
-        return redirect(url_for('settings'))
+            return render_template('settings.html', title=title, form=form)
     else:
         form.dbhost.data = app.config['DB']['HOST']
         form.dbport.data = app.config['DB']['PORT']

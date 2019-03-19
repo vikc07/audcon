@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_formhelpers.html" import render_field, render_field_checkbox, render_form_header, render_csrf %}
 {% set active_page = 'settings' %}
 
 {% block content %}
@@ -8,93 +9,27 @@
     <div class="d-flex">
         <div class="col-md-4 col-sm-4 col-6">
             <form action="{{ url_for('settings') }}" method="post" novalidate>
-                {{ form.hidden_tag() }}
-                <div class="form-group">
-                    <h2>UI</h2>
-                </div>
-                <div class="form-group">
-                    {{ form.ui_items_per_page.label }}
-                    {{ form.ui_items_per_page(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.ui_time_zone.label }}
-                    {{ form.ui_time_zone(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    <h2>Media</h2>
-                </div>
-                <div class="form-group">
-                    {{ form.media_folder.label }}
-                    {{ form.media_folder(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                    {{ form.media_scan_recursively(class_="form-check-input") }}
-                    {{ form.media_scan_recursively.label(class_="form-check-label") }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <h2>Database</h2>
-                </div>
-                <div class="form-group">
-                    {{ form.dbhost.label }}
-                    {{ form.dbhost(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.dbport.label }}
-                    {{ form.dbport(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.dbname.label }}
-                    {{ form.dbname(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.dbuser.label }}
-                    {{ form.dbuser(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.dbpass.label }}
-                    {{ form.dbpass(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    <h2>Email Alerts</h2>
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                    {{ form.alerts_enabled(class_="form-check-input") }}
-                    {{ form.alerts_enabled.label(class_="form-check-label") }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {{ form.alerts_from_address.label }}
-                    {{ form.alerts_from_address(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.alerts_to_address.label }}
-                    {{ form.alerts_to_address(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.alerts_smtp_host.label }}
-                    {{ form.alerts_smtp_host(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.alerts_smtp_port.label }}
-                    {{ form.alerts_smtp_port(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.alerts_smtp_user.label }}
-                    {{ form.alerts_smtp_user(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.alerts_smtp_pass.label }}
-                    {{ form.alerts_smtp_pass(class_="form-control") }}
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                    {{ form.alerts_smtp_tls(class_="form-check-input") }}
-                    {{ form.alerts_smtp_tls.label(class_="form-check-label") }}
-                    </div>
-                </div>
+                {{ render_csrf(form.csrf_token) }}
+                {{ render_field(form.ui_items_per_page) }}
+                {{ render_field(form.ui_time_zone) }}
+                {{ render_form_header('UI') }}
+                {{ render_field(form.media_folder) }}
+                {{ render_field_checkbox(form.media_scan_recursively) }}
+                {{ render_form_header('Database') }}
+                {{ render_field(form.dbhost) }}
+                {{ render_field(form.dbport) }}
+                {{ render_field(form.dbname) }}
+                {{ render_field(form.dbuser) }}
+                {{ render_field(form.dbpass) }}
+                {{ render_form_header('Email Alerts') }}
+                {{ render_field_checkbox(form.alerts_enabled) }}
+                {{ render_field(form.alerts_from_address) }}
+                {{ render_field(form.alerts_to_address) }}
+                {{ render_field(form.alerts_smtp_host) }}
+                {{ render_field(form.alerts_smtp_port) }}
+                {{ render_field(form.alerts_smtp_user) }}
+                {{ render_field(form.alerts_smtp_pass) }}
+                {{ render_field_checkbox(form.alerts_smtp_tls) }}
                 <span id='spinner'></span>
                 {{ form.save(class_="btn btn-primary") }}
             </form>
