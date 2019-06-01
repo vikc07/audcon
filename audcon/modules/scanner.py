@@ -42,7 +42,7 @@ def scan(full_scan = False):
     for file in all_files:
         log.debug('file: {}'.format(file))
         # Skip os files e.g. ._
-        if file.startswith('._'):
+        if os.path.basename(file).startswith('._'):
             log.debug('skipping file: {}'.format(file))
         elif os.path.exists(file):
             # Find extension and file size
