@@ -52,8 +52,8 @@ def scan(full_scan = False):
 
                 file_last_updated_in_s = (time.time() - os.path.getmtime(file))
                 # Check if the metadata was recently updated for files that are not in OK formats
-                if (last_ran_in_s > file_last_updated_in_s or last_ran_in_s == -1) and not (ext in app.config[
-                    'OK_A_FORMATS']):
+                if ((last_ran_in_s > file_last_updated_in_s or last_ran_in_s == -1) and (ext in app.config[
+                    'OK_A_FORMATS'])) or ext in app.config['OK_A_FORMATS']:
                     log.debug('file: {}'.format(file))
                     log.debug('file_last_updated_in_s: {}'.format(formatting.time_pretty(file_last_updated_in_s)))
 
