@@ -40,11 +40,14 @@ def scan(full_scan = False):
 
     files_to_scan = []
     for file in all_files:
-        # Check if file exists
-        if os.path.exists(file):
+        log.debug('file: {}'.format(file))
+        # Skip os files e.g. ._
+        if file.startswith('._'):
+            log.debug('skipping file: {}'.format(file))
+        elif os.path.exists(file):
             # Find extension and file size
             ext = functions.get_file_extension(file)
-            if ext in app.config['FILE_TYPES']:
+            if ext in app.config['FILE_TYPES']: # Check if file exists
                 log.info(ext.strip('.') + ': ' + file)
 
                 file_last_updated_in_s = (time.time() - os.path.getmtime(file))
@@ -59,11 +62,11 @@ def scan(full_scan = False):
                         log.debug('adding to scan list')
                         files_to_scan.append(file)
                 else:
-                    log.debug('skipping as metadata has been recently updated')
+                    log.debug('skipping as metadata has been recently updated: {}'.format(file))
             else:
                 log.debug('skipped unsupported file type {}'.format(file))
         else:
-            log.debug('skipping as file does not exist')
+            log.debug('skipping as file does not exist: {}'.format(file))
 
     log.info('{} files to scan'.format(len(files_to_scan)))
 

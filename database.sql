@@ -1,6 +1,7 @@
 CREATE DATABASE audcon_dev CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'audcon_dev'@'%' IDENTIFIED BY 'audcon_dev_123';
 GRANT ALL PRIVILEGES ON audcon_dev.* To 'audcon_dev'@'%';
+USE audcon_Dev;
 
 CREATE TABLE `media` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -37,17 +38,6 @@ CREATE TABLE `queue` (
   `media_converted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE `run_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `created_date` datetime NOT NULL,
-  `modified_date` datetime NOT NULL,
-  `isdeleted` int(11) DEFAULT NULL,
-  `service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `params` json DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `run_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -1,0 +1,10 @@
+-e git+https://github.com/vikc07/gpm.git#egg=gpm
+flask
+sqlalchemy
+pymysql
+flask
+flask_sqlalchemy
+flask_migrate
+flask_wtf
+pytz
+apscheduler
