@@ -156,7 +156,7 @@ def scan(full_scan = False):
 
                 # Enqueue
                 not_supported = ''
-                if record.media_a_codec not in app.config['OK_A_FORMATS']:
+                if ('.' + record.media_a_codec) not in app.config['OK_A_FORMATS']:
                     not_supported = '**not supported'
                     enqueue.enqueue(file)
 
