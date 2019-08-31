@@ -50,6 +50,10 @@
                     {% endfor %}
                 {% endif %}
                 {% endwith %}
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-3 border-bottom">
+                    <h2>{{ title }}</h2>
+                </div>
+                {% include "pagination.html" %}
                 {% block content %}{% endblock %}
             </main>
           </div>

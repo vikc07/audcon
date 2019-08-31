@@ -1,26 +1,6 @@
 {% extends "base.html" %}
 {% set active_page = 'activity' %}
-
 {% block content %}
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-3 border-bottom">
-        <h2>{{ title }}</h2>
-    </div>
-    <div class="d-flex pt-2">
-        <nav aria-label="...">
-          <ul class="pagination pagination-sm">
-            {% for page in range(pages) %}
-                {% if current_page == (page + 1) %}
-                {%  set disabled = 'disabled' %}
-                {% else %}
-                {%  set disabled = '' %}
-                {% endif %}
-            <li class="page-item {{ disabled }}">
-              <a class="page-link" href="{{ url_for('activity') }}/p/{{ page + 1}}" tabindex="-1">{{ page + 1 }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </nav>
-    </div>
     <div class="d-flex pt-2">
         <table class="table table-hover table-sm">
             <thead class="thead-light">
