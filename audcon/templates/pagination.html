@@ -10,7 +10,7 @@
                 {% endif %}
                 {% if pages > ns.max_limit and (page < ns.show_limit or page > (pages - ns.show_limit)) %}
             <li class="page-item {{ disabled }}">
-              <a class="page-link" href="{{ url_for('activity') }}/p/{{ page + 1}}" tabindex="-1">{{ page + 1 }}</a>
+              <a class="page-link" href="{{ url_for(active_page) }}/p/{{ page + 1}}" tabindex="-1">{{ page + 1 }}</a>
             </li>
                 {% elif ns.long_pagination == false %}
               <li class="page-item disabled">
